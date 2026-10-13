@@ -300,6 +300,7 @@ export const zh: TranslationKeys = {
   'docs.sidebar.acp': 'ACP',
   'docs.sidebar.contributing': '贡献',
   'docs.sidebar.faq': 'FAQ',
+  'docs.sidebar.chatgptPreview': 'ChatGPT 登录预览版',
   'docs.search.placeholder': '搜索...',
   'docs.search.noResults': '未找到结果',
   'docs.search.hint.select': '选择',

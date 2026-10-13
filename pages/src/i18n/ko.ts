@@ -300,6 +300,7 @@ export const ko: TranslationKeys = {
   'docs.sidebar.acp': 'ACP',
   'docs.sidebar.contributing': '기여하기',
   'docs.sidebar.faq': 'FAQ',
+  'docs.sidebar.chatgptPreview': 'ChatGPT 로그인 미리보기',
   'docs.search.placeholder': '검색...',
   'docs.search.noResults': '검색 결과가 없습니다',
   'docs.search.hint.select': '선택',

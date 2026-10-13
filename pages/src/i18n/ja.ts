@@ -300,6 +300,7 @@ export const ja: TranslationKeys = {
   'docs.sidebar.acp': 'ACP',
   'docs.sidebar.contributing': 'コントリビュート',
   'docs.sidebar.faq': 'FAQ',
+  'docs.sidebar.chatgptPreview': 'ChatGPT サインインのプレビュー',
   'docs.search.placeholder': '検索...',
   'docs.search.noResults': '結果が見つかりません',
   'docs.search.hint.select': '選択',

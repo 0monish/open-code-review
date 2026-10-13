@@ -298,6 +298,7 @@ export const ru: TranslationKeys = {
   'docs.sidebar.acp': 'ACP',
   'docs.sidebar.contributing': 'Участие в разработке',
   'docs.sidebar.faq': 'FAQ',
+  'docs.sidebar.chatgptPreview': 'Вход через ChatGPT (предварительная версия)',
   'docs.search.placeholder': 'Поиск...',
   'docs.search.noResults': 'Ничего не найдено',
   'docs.search.hint.select': 'Выбрать',

@@ -113,6 +113,10 @@ func TestResolve_DefaultRules(t *testing.T) {
 		{"src/lib.rs", "Ownership and Lifetime Correctness"},
 		{"crates/service/src/main.rs", "Unsafe Code Boundaries"},
 		{"crates/service/Cargo.toml", "Cargo Manifest Hygiene"},
+		{"docs/specs/gh473-macos-resource-origin.md", "Spec and documentation review"},
+		{"docs/architecture/native.md", "Spec and documentation review"},
+		{"docs/agents/process.markdown", "Spec and documentation review"},
+		{"components/docs/design.mdx", "Spec and documentation review"},
 		{"scripts/deploy.py", "Mutable Default Arguments"},
 		{"src/app/main.py", "Mutable Default Arguments"},
 		{"stubs/example.pyi", "Mutable Default Arguments"},
@@ -205,7 +209,7 @@ func TestResolve_FallbackToDefault(t *testing.T) {
 
 	paths := []string{
 		"readme.md",
-		"docs/architecture.txt",
+		"config/architecture.txt",
 		"Makefile",
 	}
 

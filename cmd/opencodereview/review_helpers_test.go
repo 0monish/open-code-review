@@ -58,11 +58,11 @@ func TestRunPreviewJSONFormat(t *testing.T) {
 	if got.Entries[0].Path != "notes.md" {
 		t.Errorf("path = %q, want notes.md", got.Entries[0].Path)
 	}
-	if got.Entries[0].WillReview {
-		t.Error("notes.md should be excluded by the extension allowlist")
+	if !got.Entries[0].WillReview {
+		t.Error("notes.md must be included so changed specifications are actually reviewed")
 	}
-	if got.Entries[0].ExcludeReason != model.ExcludeExtension {
-		t.Errorf("exclude_reason = %q, want %q", got.Entries[0].ExcludeReason, model.ExcludeExtension)
+	if got.Entries[0].ExcludeReason != model.ExcludeNone {
+		t.Errorf("exclude_reason = %q, want %q", got.Entries[0].ExcludeReason, model.ExcludeNone)
 	}
 }
 

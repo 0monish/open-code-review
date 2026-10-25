@@ -149,8 +149,13 @@ func TestIsAllowedExt(t *testing.T) {
 		{".PSM1", true},
 		{".psd1", true},
 		{".PSD1", true},
-		{".txt", false},
-		{".md", false},
+		{".txt", true},
+		{".TXT", true},
+		{".md", true},
+		{".MD", true},
+		{".markdown", true},
+		{".mdx", true},
+		{".rst", true},
 		{".png", false},
 		{".lock", false},
 		{"", false},
@@ -210,6 +215,7 @@ func TestAllowlistKeepsEveryTestedExtension(t *testing.T) {
 		".js", ".jsx", ".c", ".h", ".cpp", ".cc", ".cxx", ".hpp", ".hxx", ".cs",
 		".rb", ".sh", ".bash", ".zsh", ".sql", ".css", ".scss", ".html", ".xml", ".yaml",
 		".yml", ".json", ".toml", ".lua", ".swift",
+		".md", ".markdown", ".mdx", ".rst", ".txt",
 	}
 	for _, ext := range tested {
 		if !allowed[ext] {

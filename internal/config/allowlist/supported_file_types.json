@@ -121,5 +121,10 @@
   ".glsl",
   ".hlsl",
   ".wgsl",
-  ".metal"
+  ".metal",
+  ".md",
+  ".markdown",
+  ".mdx",
+  ".rst",
+  ".txt"
 ]

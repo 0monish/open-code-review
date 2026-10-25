@@ -5,6 +5,26 @@ the active ChatGPT conversation and not a workaround for ChatGPT authentication.
 An MCP client such as ChatGPT must **actively** read OCR's pending model turns,
 run them with its own available model, and send back structured responses.
 
+### Review KELD specifications and documentation, not just code
+
+This patched CLI treats changed `.md`, `.markdown`, `.mdx`, `.rst` and `.txt`
+files as first-class review inputs **without** requiring a one-time `--rule`
+override. Files under `docs/` receive the embedded
+`markdown_spec_review.md` rubric, which audits security authority, source
+identity, native acceptance, negative controls, ownership, dependencies and
+claims of implementation status. A Markdown-only PR must yield nonzero
+`reviewable_count` in `ocr review --preview --format json`. A zero count is a
+review coverage failure, not approval.
+
+This changes only the default file-extension and review-rule selection;
+known credential/secret paths, user excludes, binary files, and large prompt
+limits still fail closed. For a very large spec, inspect the preview/manifest
+for `too_large` or other excluded paths, increase `--max-tokens` within model
+limits or review the material in bounded scoped runs, and never claim complete
+document coverage until every intended diff is selected. In an OCR high-effort
+review, `--effort high` configures OCR's planning/rounds, not an attested
+reasoning budget of the MCP host model.
+
 Unlike `ocr delegate preview` and `ocr delegate rule`, this preserves the
 **normal `ocr review` execution pipeline**: OCR still selects files, plans and
 groups work, constructs model tool definitions, executes tools, processes

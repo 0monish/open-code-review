@@ -287,7 +287,7 @@ func TestPreviewMarksOversizedDiffTooLarge(t *testing.T) {
 // TestPreviewMatchesRunSelectedCoverage is the property #782 asked for:
 // preview's will_review set must equal the set a fresh, non-resumed,
 // unbudgeted run registers as selected coverage. The changeset deliberately
-// mixes every outcome — reviewable, extension-filtered, deleted, and oversized
+// mixes every outcome — code and docs reviewable, extension-filtered, deleted, and oversized
 // — so a gate applied on only one of the two paths breaks the comparison.
 func TestPreviewMatchesRunSelectedCoverage(t *testing.T) {
 	dir := initPreviewRepo(t)
@@ -300,6 +300,7 @@ func TestPreviewMatchesRunSelectedCoverage(t *testing.T) {
 	}
 	write("main.go", "package main\n")
 	write("notes.md", "# notes\n")
+	write("opaque.unknown", "a file extension the OCR reviewer does not support\n")
 	write("huge.go", strings.Repeat("token ", 2000))
 	if err := os.Remove(filepath.Join(dir, "gone.go")); err != nil {
 		t.Fatalf("remove gone.go: %v", err)
@@ -336,15 +337,16 @@ func TestPreviewMatchesRunSelectedCoverage(t *testing.T) {
 			previewed = append(previewed, e.Path)
 		}
 	}
-	if !slices.Equal(previewed, []string{"main.go"}) {
-		t.Fatalf("preview will_review = %v, want [main.go]; entries = %+v", previewed, preview.Entries)
+	if !slices.Equal(previewed, []string{"main.go", "notes.md"}) {
+		t.Fatalf("preview will_review = %v, want [main.go notes.md]; entries = %+v", previewed, preview.Entries)
 	}
 	// Pin the fixture itself: the comparison below is only meaningful while each
 	// exclusion path is actually represented.
 	for path, want := range map[string]ExcludeReason{
-		"notes.md": ExcludeExtension,
-		"gone.go":  ExcludeDeleted,
-		"huge.go":  ExcludeTooLarge,
+		"notes.md":       ExcludeNone,
+		"opaque.unknown": ExcludeExtension,
+		"gone.go":        ExcludeDeleted,
+		"huge.go":        ExcludeTooLarge,
 	} {
 		if got := byPath[path].ExcludeReason; got != want {
 			t.Fatalf("%s exclude_reason = %q, want %q", path, got, want)

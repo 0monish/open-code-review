@@ -106,17 +106,22 @@ func TestWhyExcluded_ExtensionFilter(t *testing.T) {
 		expected ExcludeReason
 	}{
 		{
-			name: "unsupported extension txt",
+			name: "documentation text now reviewed",
 			diff: model.Diff{
 				NewPath: "README.txt",
 			},
-			expected: ExcludeExtension,
+			expected: ExcludeNone,
 		},
 		{
-			name: "unsupported extension md",
+			name: "documentation markdown now reviewed",
 			diff: model.Diff{
 				NewPath: "docs/guide.md",
 			},
+			expected: ExcludeNone,
+		},
+		{
+			name:     "unsupported binary media extension remains refused",
+			diff:     model.Diff{NewPath: "docs/diagram.png"},
 			expected: ExcludeExtension,
 		},
 		{
@@ -277,7 +282,7 @@ func TestWhyExcluded_UserIncludePattern(t *testing.T) {
 		{
 			name: "unsupported extension even if path looks like include dir",
 			diff: model.Diff{
-				NewPath: "src/notes.txt",
+				NewPath: "src/notes.png",
 			},
 			expected: ExcludeExtension,
 		},
@@ -431,6 +436,13 @@ func TestWhyExcluded_SecretPath(t *testing.T) {
 			expected: ExcludeSecret,
 		},
 		{
+			// Markdown is now reviewable but cannot bypass the secret-path gate.
+			name:     "Markdown-shaped env secret remains excluded",
+			filter:   &rules.FileFilter{Include: []string{"docs/**/*.md"}},
+			path:     "docs/specs/.env.md",
+			expected: ExcludeSecret,
+		},
+		{
 			name:     "extensionless key excluded",
 			path:     "id_rsa",
 			expected: ExcludeSecret,
@@ -480,8 +492,8 @@ func TestWhyExcluded_SecretPath(t *testing.T) {
 			expected: ExcludeNone,
 		},
 		{
-			name:     "ordinary unsupported extension unchanged",
-			path:     "src/notes.txt",
+			name:     "ordinary unsupported image extension unchanged",
+			path:     "src/notes.png",
 			expected: ExcludeExtension,
 		},
 		{

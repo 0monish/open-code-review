@@ -35,6 +35,9 @@ const (
 	// official SDK's bedrock middleware performs that rewriting, so this
 	// shares the Anthropic client rather than reimplementing the protocol.
 	ProtocolAnthropicBedrock = "anthropic-bedrock"
+	// ProtocolHostAgent exchanges explicit model turns with a loopback relay
+	// operated by an MCP client; it does not authenticate to a model itself.
+	ProtocolHostAgent = "host-agent"
 )
 
 // NormalizeProtocol canonicalizes protocol names. It is case-insensitive and
@@ -55,6 +58,8 @@ func NormalizeProtocol(raw string) string {
 		return ProtocolOpenAIResponses
 	case ProtocolAnthropicBedrock:
 		return ProtocolAnthropicBedrock
+	case ProtocolHostAgent:
+		return ProtocolHostAgent
 	default:
 		return normalized
 	}
@@ -64,9 +69,9 @@ func NormalizeProtocol(raw string) string {
 // everything else.
 func ValidateProtocol(p string) error {
 	switch p {
-	case ProtocolAnthropic, ProtocolOpenAIChatCompletions, ProtocolOpenAIResponses, ProtocolAnthropicBedrock:
+	case ProtocolAnthropic, ProtocolOpenAIChatCompletions, ProtocolOpenAIResponses, ProtocolAnthropicBedrock, ProtocolHostAgent:
 		return nil
 	default:
-		return fmt.Errorf("unsupported protocol %q; supported protocols are %q, %q, %q, %q", p, ProtocolAnthropic, ProtocolOpenAIChatCompletions, ProtocolOpenAIResponses, ProtocolAnthropicBedrock)
+		return fmt.Errorf("unsupported protocol %q; supported protocols are %q, %q, %q, %q, %q", p, ProtocolAnthropic, ProtocolOpenAIChatCompletions, ProtocolOpenAIResponses, ProtocolAnthropicBedrock, ProtocolHostAgent)
 	}
 }

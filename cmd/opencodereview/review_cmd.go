@@ -81,6 +81,9 @@ var reviewCmd = &cobra.Command{
   # Select a configured provider and model for this run only
   ocr review --provider anthropic --model claude-opus-4-6 --format json
 
+  # Ask an actively connected MCP host to supply model turns, keeping OCR's review engine
+  ocr review --provider host-agent --effort high --format json
+
   # Agent mode (summary only, no progress lines)
   ocr review --audience agent
 

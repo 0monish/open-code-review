@@ -57,6 +57,7 @@ func init() {
 	rootCmd.AddCommand(reviewCmd)
 	rootCmd.AddCommand(scanCmd)
 	rootCmd.AddCommand(delegateCmd)
+	rootCmd.AddCommand(hostAgentCmd)
 	rootCmd.AddCommand(sessionCmd)
 	rootCmd.AddCommand(configCmd)
 	rootCmd.AddCommand(authCmd)

@@ -509,6 +509,8 @@ func NewLLMClient(ep ResolvedEndpoint, collector *RetryCollector, raw *RawHolder
 		return NewAnthropicBedrockClient(cfg)
 	case ProtocolOpenAIResponses:
 		return NewOpenAIResponsesClient(cfg)
+	case ProtocolHostAgent:
+		return NewHostAgentClient(cfg)
 	default:
 		return NewOpenAIClient(cfg)
 	}

@@ -114,6 +114,31 @@ func ResolveEndpointWithOptions(configPath string, opts ResolveOptions) (Resolve
 	if err != nil {
 		return ResolvedEndpoint{}, err
 	}
+	// An explicit host-agent selection is independent of a configured ChatGPT
+	// account. In particular, a signed-out default ChatGPT provider must not
+	// block a local MCP host from servicing OCR model turns. The relay provides
+	// the *responses*, not ChatGPT account credentials or a model endpoint.
+	if opts.Provider == ProtocolHostAgent {
+		url := strings.TrimSpace(os.Getenv("OCR_HOST_AGENT_URL"))
+		token := strings.TrimSpace(os.Getenv("OCR_HOST_AGENT_TOKEN"))
+		if url == "" || token == "" {
+			return ResolvedEndpoint{}, fmt.Errorf("host-agent provider requires OCR_HOST_AGENT_URL and OCR_HOST_AGENT_TOKEN from a trusted local MCP relay")
+		}
+		if err := validateHostAgentURL(url); err != nil {
+			return ResolvedEndpoint{}, err
+		}
+		model := opts.Model
+		if model == "" {
+			model = strings.TrimSpace(os.Getenv("OCR_HOST_AGENT_MODEL"))
+		}
+		if model == "" {
+			model = "mcp-host-agent-unattested"
+		}
+		return finalizeResolvedEndpoint("provider:host-agent (MCP client model, not verified)", ResolvedEndpoint{
+			URL: url, Token: token, Model: model, Provider: ProtocolHostAgent,
+			Protocol: ProtocolHostAgent,
+		}, env), nil
+	}
 
 	if opts.Provider != "" {
 		ep, ok, err := tryOCRConfig(configPath, opts)
